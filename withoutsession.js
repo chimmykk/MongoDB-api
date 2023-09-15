@@ -14,12 +14,11 @@ app.get('/api/users/:email', async (req, res) => {
     const email = req.params.email.toLowerCase();
     console.log('Searching for email:', email);
 
-
-           const userCredentials = await UserCredentials.findOne({ email });
+    const userCredentials = await UserCredentials.findOne({ email }, { _id: 1 });
 
     if (userCredentials) {
       console.log('User found:', userCredentials);
-      return res.json({ exists: true });
+      return res.json({ exists: true, _id: userCredentials._id });
     } else {
       console.log('User not found');
       return res.json({ exists: false });
